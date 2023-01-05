@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- 
+    div p, 所有在 <div> 裡面的 <p> 元素，含所有子孫層。
+    div > p, 所有在 <div> 裡面的 <p> 元素，只有第一層。
+    div + p, 第一個接在 <div> 元素後的 <p> 元素。
+    p ~ ul, 在 <p> 元素後的所有 <ul> 元素。
+  -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS - Selectors</title>
+  <style>
+  	.first-div p {
+      color: white;
+    }
+    
+  	div p {
+      background-color: black;
+    }
+    
+    div > p {
+      border: 4px solid red;
+    }
+    
+    div + p {
+      background-color: grey;
+    }
+    
+    p ~ ul {
+      border: 4px solid blue;	
+    }
+
+  </style>
+</head>
+<body>
+  <div class="first-div">
+    <p>background color is black, and with red border</p>
+    <p>background color is black, and with red border</p>
+    <section>
+      <h2>H2 Title 1</h2>
+      <p>background color is black</p>
+      <p>background color is black</p>
+    </section>
+    <p>background color is black, and with red border</p>
+    <p>background color is black, and with red border</p>
+    <div>
+      <h2>H2 Title 2</h2>
+      <p>background color is black, and with red border</p>
+      <p>background color is black, and with red border</p>
+    </div>
+    <p>background color is grey, and with red border</p>
+    <p>background color is black, and with red border</p>
+  </div>
+  
+  <ul>
+    <li>Coffee 1</li>
+    <li>Tea 1</li>
+    <li>Milk 1</li>
+  </ul>
+
+  <p>The first paragraph.</p>
+  <ul>
+    <li>Coffee 2</li>
+    <li>Tea 2</li>
+    <li>Milk 2</li>
+  </ul>
+
+  <h2>Another list</h2>
+  <ul>
+    <li>Coffee 3</li>
+    <li>Tea 3</li>
+    <li>Milk 3</li>
+  </ul>
+</body>
+</html>
