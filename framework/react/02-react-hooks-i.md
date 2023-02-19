@@ -27,16 +27,16 @@ Hooks are functions that let you “hook into” React state and lifecycle featu
 - Returns: `useState` returns an `array` with **exactly two values**:
   - The current state. During the first render, it will match the initialState you have passed.
   - The set function that lets you update the state to a different value and trigger a re-render.
-
-```jsx
-function ExampleWithManyStates() {
-  // Declare multiple state variables!
-  const [age, setAge] = useState(42);
-  const [fruit, setFruit] = useState('banana');
-  const [todos, setTodos] = useState([{ text: 'Learn Hooks' }]);
-  // ...
-}
-```
+- Example
+  ```jsx
+  function ExampleWithManyStates() {
+    // Declare multiple state variables!
+    const [age, setAge] = useState(42);
+    const [fruit, setFruit] = useState('banana');
+    const [todos, setTodos] = useState([{ text: 'Learn Hooks' }]);
+    // ...
+  }
+  ```
 
 
 ### useEffect
@@ -50,26 +50,91 @@ function ExampleWithManyStates() {
   - `setup`: The function with your Effect’s logic. Your setup function may also optionally return a cleanup function.
   - (optional) `dependencies`: The list of all reactive values referenced inside of the setup code.
 - Returns: `useEffect` returns `undefined`.
+- Example
+  ```jsx
+  import { useEffect } from 'react';
+  import { createConnection } from './chat.js';
+
+  function ChatRoom({ roomId }) {
+    const [serverUrl, setServerUrl] = useState('https://localhost:1234');
+
+    useEffect(() => {
+      const connection = createConnection(serverUrl, roomId);
+      connection.connect();
+      return () => {
+        connection.disconnect();
+      };
+    }, [serverUrl, roomId]);
+    // ...
+  }
+  ```
 
 
-```jsx
-import { useEffect } from 'react';
-import { createConnection } from './chat.js';
+### useContext
+> 使用父 / 祖父層傳下來的 context
 
-function ChatRoom({ roomId }) {
-  const [serverUrl, setServerUrl] = useState('https://localhost:1234');
+- Definition: `useContext` is a React Hook that lets you read and subscribe to context from your component.
+  ```js
+  const value = useContext(SomeContext);
+  ```
+- Parameters
+  - `SomeContext`: The context that you’ve previously created with `createContext`.
+- Returns: `useContext` returns the context value for the calling component. It is determined as the `value` passed to the closest `SomeContext.Provider` above the calling component in the tree.
 
-  useEffect(() => {
-    const connection = createConnection(serverUrl, roomId);
-    connection.connect();
-    return () => {
-      connection.disconnect();
-    };
-  }, [serverUrl, roomId]);
-  // ...
-}
-```
+- Example
+  1. createContext
+      ```jsx
+      // ThemeContext.jsx
+      import { createContext } from 'react';
 
+      const themes = {
+        light: {
+          foreground: "#000000",
+          background: "#eeeeee"
+        },
+        dark: {
+          foreground: "#ffffff",
+          background: "#222222"
+        }
+      };
+
+      const ThemeContext = createContext(themes.light);
+      ``` 
+  2. Provide the context
+      ```jsx
+      // ThemeContext.jsx
+      import ThemedButton from './ThemeButton';
+
+      const themes = { /** ... */ };
+      function App() {
+        return (
+          <ThemeContext.Provider value={themes.dark}>
+            <Toolbar />
+          </ThemeContext.Provider>
+        );
+      }
+
+      function Toolbar(props) {
+        return (
+          <div>
+            <ThemedButton />
+          </div>
+        );
+      }
+      ```
+  3. useContext
+      ```jsx
+      import ThemeContext from '../ThemeContext';
+
+      function ThemedButton() {
+        const theme = useContext(ThemeContext);
+        return (
+          <button style={{ background: theme.background, color: theme.foreground }}>
+            I am styled by theme context!
+          </button>
+        );
+      }
+      ```
 
 
 ## Reference
