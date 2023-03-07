@@ -24,14 +24,14 @@ Git basic intro
 
 - fetch
 
-  ```
+  ```sh
   // 將遠端儲存庫的最新版下載回來
   git fetch
   ```
 
 - pull
 
-  ```
+  ```sh
   // 更新到最新的現在分支（可以避免無謂的 merge 節點）
   git pull --rebase
   
@@ -42,7 +42,7 @@ Git basic intro
 
 - push
 
-  ```
+  ```sh
   // 將本地分支新增到 remote，以下兩種方式都可以
   git push --set-upstream origin <new_branch>
   git push -u origin <new_branch>
@@ -55,7 +55,7 @@ Git basic intro
   
 - add
 
-  ```
+  ```sh
   // 把文件放到 stage
   git add <file_name>
   
@@ -72,7 +72,7 @@ Git basic intro
 
 - commit
 
-  ```
+  ```sh
   git commit -m "The content you want to commit"
   ```
 
@@ -80,27 +80,26 @@ Git basic intro
 
 - merge (待補)
 
-  ```
-  
-  ```
-
   
 
 - delete
 
-  ```
+  ```sh
   // delete local branch
-   git branch -d <branch_name>
+  git branch -d <branch_name>
    
-   // delete remote branch (讓遠端跟本地同步 -> 一起刪除)
-   git push origin :<branch_name>
+  // delete remote branch (讓遠端跟本地同步 -> 一起刪除)
+  git push origin :<branch_name>
+   
+  // delete remote branch
+  git push origin --delete <branch_name>
   ```
 
   
 
 - stash
 
-  ```
+  ```sh
   // 儲存
   git stash
   
@@ -125,7 +124,7 @@ Git basic intro
 
 - log
 
-  ```
+  ```sh
   // 列出 log 紀錄
   git log
   
@@ -142,7 +141,7 @@ Git basic intro
 
 - cherry-pick
 
-  ```
+  ```sh
   // 複製其他分支的 Commit 的內容過來貼上，並生成一個 commit
   git cherry-pick <commit_hash>
 
@@ -154,7 +153,7 @@ Git basic intro
 
 - branch
 
-  ```
+  ```sh
   // 查看現在在哪個分支，以及本地端有哪些分支
   git branch
   
@@ -172,7 +171,7 @@ Git basic intro
 
 - reset（待補充更多）
 
-  ```
+  ```sh
   // 將 head 移到 commit_hash 或 tag_name 的位置，codebase 變到 commit_hash 或 tag_name
   // git reset <commit_hash || tag_name> --<param>
   // param:
@@ -188,7 +187,7 @@ Git basic intro
 
 - rebase（待補充）  
 
-  ```
+  ```sh
   // 有好幾個操作行為
   git rebase -i <commit_hash>
   
@@ -218,7 +217,7 @@ Git basic intro
 
 - config
 
-  ```
+  ```sh
   // show git user name
   git config user.name
   
@@ -237,7 +236,7 @@ Git basic intro
 
 - show
 
-  ```
+  ```sh
   // 查看修改內容
   git show <file_name>
   ```
@@ -247,7 +246,7 @@ Git basic intro
 
 - tag
 
-  ```
+  ```sh
   // 列出標籤
   git tag
   
@@ -271,16 +270,18 @@ Git basic intro
 ### 使用 pull --rebase 更新分支的 codebase
 
 - `git pull --rebase origin <target_branch>` (更新到最新的 \<target_branch> codebase)
-- git push -f (強制把本機的分支覆蓋遠端的)
+- `git push -f` (強制把本機的分支覆蓋遠端的)
+
+
+### 更新遠端分支命名
+- delete remote branch `git push origin --delete <old_branch_name>`
+- disconnect local and remote branch `git branch --unset-upstream`
+- rename local branch `git branch -m <new_branch_name>`
+- push local branch to remote `git push -u origin <new_branch>`
 
 
 
+## Reference
+[1] https://git-scm.com/doc
 
-
-
- ## Reference
-
-https://blog.darkthread.net/blog/my-git-cheatsheet/
-
-
-  ```
+[2] https://blog.darkthread.net/blog/my-git-cheatsheet/
