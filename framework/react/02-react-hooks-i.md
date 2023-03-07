@@ -1,4 +1,7 @@
 # React Hooks - I
+> - useState
+> - useEffect
+> - useContext
 
 ## Intro
 ### What is a Hook?
@@ -10,24 +13,22 @@ Hooks are functions that let you “hook into” React state and lifecycle featu
 2. Only call Hooks from React function components.
 
 
-
-## Basic
-- useState
-- useEffect
-- useContext
-
-
-### useState
-- Definition: `useState` is a React Hook that lets you add a state variable to your component.
+## Hooks 1 - 1: `useState`
+### Definition:
+`useState` is a React Hook that lets you add a state variable to your component.
   ```js
   const [state, setState] = useState(initialState)
   ```
-- Parameters
+
+### Parameters:
   - `initialState`: The value you want the state to be initially. It can be a value of any type, but there is a special behavior for functions.
-- Returns: `useState` returns an `array` with **exactly two values**:
+
+### Returns:
+`useState` returns an `array` with **exactly two values**:
   - The current state. During the first render, it will match the initialState you have passed.
   - The set function that lets you update the state to a different value and trigger a re-render.
-- Example
+
+### Example:
   ```jsx
   function ExampleWithManyStates() {
     // Declare multiple state variables!
@@ -39,18 +40,20 @@ Hooks are functions that let you “hook into” React state and lifecycle featu
   ```
 
 
-### useEffect
-- Definition: `useEffect` is a React Hook that lets you synchronize a component with an external system.
+## Hooks 1 - 2: `useEffect`
+### Definition:
+`useEffect` is a React Hook that lets you synchronize a component with an external system.
   ```js
   useEffect(setup, dependencies?)
   ```
   > You’ve likely performed data fetching, subscriptions, or manually changing the DOM from React components before. We call these operations “side effects” (or “effects” for short) because they can affect other components and can’t be done during rendering.
 
-- Parameters
+### Parameters:
   - `setup`: The function with your Effect’s logic. Your setup function may also optionally return a cleanup function.
   - (optional) `dependencies`: The list of all reactive values referenced inside of the setup code.
-- Returns: `useEffect` returns `undefined`.
-- Example
+### Returns:
+  - `undefined`.
+### Example:
   ```jsx
   import { useEffect } from 'react';
   import { createConnection } from './chat.js';
@@ -68,75 +71,86 @@ Hooks are functions that let you “hook into” React state and lifecycle featu
     // ...
   }
   ```
+> add empty `[]` as the second argument to the `useEffect` call to skip unnecessarily re-running.
+> ```js
+> useEffect(() => {
+>   // ...
+> }, []);
 
 
-### useContext
+## Hooks 1 - 3: `useContext`
 > 使用父 / 祖父層傳下來的 context
 
-- Definition: `useContext` is a React Hook that lets you read and subscribe to context from your component.
+### Definition:
+`useContext` is a React Hook that lets you read and subscribe to context from your component.
   ```js
   const value = useContext(SomeContext);
   ```
-- Parameters
+
+### Parameters:
   - `SomeContext`: The context that you’ve previously created with `createContext`.
-- Returns: `useContext` returns the context value for the calling component. It is determined as the `value` passed to the closest `SomeContext.Provider` above the calling component in the tree.
 
-- Example
-  1. createContext
-      ```jsx
-      // ThemeContext.jsx
-      import { createContext } from 'react';
+### Returns:
+- context value for the calling component. 
 
-      const themes = {
-        light: {
-          foreground: "#000000",
-          background: "#eeeeee"
-        },
-        dark: {
-          foreground: "#ffffff",
-          background: "#222222"
-        }
-      };
+  > It is determined as the `value` passed to the closest `SomeContext.Provider` above the calling component in the tree.
 
-      const ThemeContext = createContext(themes.light);
-      ``` 
-  2. Provide the context
-      ```jsx
-      // ThemeContext.jsx
-      import ThemedButton from './ThemeButton';
+### Example:
+1. createContext
+    ```jsx
+    // ThemeContext.jsx
+    import { createContext } from 'react';
 
-      const themes = { /** ... */ };
-      function App() {
-        return (
-          <ThemeContext.Provider value={themes.dark}>
-            <Toolbar />
-          </ThemeContext.Provider>
-        );
+    const themes = {
+      light: {
+        foreground: "#000000",
+        background: "#eeeeee"
+      },
+      dark: {
+        foreground: "#ffffff",
+        background: "#222222"
       }
+    };
 
-      function Toolbar(props) {
-        return (
-          <div>
-            <ThemedButton />
-          </div>
-        );
-      }
-      ```
-  3. useContext
-      ```jsx
-      import ThemeContext from '../ThemeContext';
+    const ThemeContext = createContext(themes.light);
+    ``` 
+2. Provide the context
+    ```jsx
+    // ThemeContext.jsx
+    import ThemedButton from './ThemeButton';
 
-      function ThemedButton() {
-        const theme = useContext(ThemeContext);
-        return (
-          <button style={{ background: theme.background, color: theme.foreground }}>
-            I am styled by theme context!
-          </button>
-        );
-      }
-      ```
+    const themes = { /** ... */ };
+    function App() {
+      return (
+        <ThemeContext.Provider value={themes.dark}>
+          <Toolbar />
+        </ThemeContext.Provider>
+      );
+    }
 
+    function Toolbar(props) {
+      return (
+        <div>
+          <ThemedButton />
+        </div>
+      );
+    }
+    ```
+3. useContext
+    ```jsx
+    import ThemeContext from '../ThemeContext';
+
+    function ThemedButton() {
+      const theme = useContext(ThemeContext);
+      return (
+        <button style={{ background: theme.background, color: theme.foreground }}>
+          I am styled by theme context!
+        </button>
+      );
+    }
+    ```
 
 ## Reference
 [1] https://reactjs.org/docs/hooks-overview.html
+
 [2] https://beta.reactjs.org/reference/react
