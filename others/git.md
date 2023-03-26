@@ -165,6 +165,9 @@ Git basic intro
 
   // Rename local branch name
   git branch -m <new_branch_name>
+
+  // disconnect local from remote branch
+  git branch --unset-upstream
   ```
 
 
